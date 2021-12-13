@@ -1,0 +1,115 @@
+  
+public function store(Request $request)
+    {
+      $files = $request->file('file');
+  		foreach ($files as $file) {
+        Filepdf::create([
+          'file' => $file->getClientOriginalName(),
+          'nm_file' => 'Upload with dropzone.js',
+          'path' => $file->store('public/datapdf')
+        ]);
+      }
+      return  back()->with(['info'=>'File Anda Sukses diUpload']);
+    }
+
+    //upload file pdf
+  	public function upload(Request $request){
+  		$file = $request->file('file');
+  		Filepdf::create([
+        'file' => $file->getClientOriginalName(),
+  			'nm_file' => 'Upload with dropzone.js',
+        'path' => $file->store('public/datapdf')
+  		]);
+      $data = $request->input('file');
+      $file = $request->file('file')->getClientOriginalName();
+      $destination = base_path() . '/public/datapdf';
+      $request->file('file')->move($destination,$file);
+  		Filepdf::create([
+        'file' => $file->getClientOriginalName(),
+  			'nm_file' => 'Upload with dropzone.js',
+  		]);
+
+    }
+
+
+    <td><a href="{{ route('user/hapus') }}" class="btn btn-danger btn-sm btn-block">Hapus</a></td>
+href="/user/hapus/{{ $s->id }}"
+
+// start if
+  			
+     'file' => 'required|file|mimes:pdf|max:2048',
+  		// menyimpan data file yang diupload ke variabel $file
+  		$file = $request->file('file');
+
+      // isi dengan nama folder tempat kemana file diupload
+  		$tujuan_upload = '/public';
+  		$file->move($tujuan_upload,$file);
+
+      if (Input::hasFile('my_pdf')) {
+
+   // File was successfully uploaded and is now in temp storage.
+   // Move it somewhere more permanent to access it later.
+
+   if (Input::file('my_pdf')->move('public/datapdf/')) {
+       // File successfully saved to permanent storage
+       return back()->with(['info'=>'Your book has been uploaded']);
+
+   } else {
+       // Failed to save file, perhaps dir isn't writable. Give the user an error.
+       return back()->with(['info'=>'Your book has not been uploaded']);
+   }
+
+
+Route::get('/dataPkl', 'PklController@index');
+
+  public function index()
+    {
+      $siswapkl = SiswaPkl::all();
+      // mengirim data siswa ke view data-table-tik
+      return view('master-admin',['siswas' => $siswapkl]);
+    }
+
+  <form action="{{ route('uploadpdf') }}" method="POST" enctype="multipart/form-data" class="form-element-area">
+                            {{ csrf_field() }}
+                            <div class="container">
+                                <div class="row">
+                                        @include('flashmsg')
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-element-list">
+                                            <div class="col-lg-4 col-md-8 col-sm-4 col-xs-12">
+                                              <b>Kode SuratFile</b>
+                                                  <div class="nk-int-st">
+                                                    <input type="text" name="nosurat" placeholder="SuratPKL">
+                                                  </div>
+                                                @if($errors->has('nosurat'))
+                                                  <div class="text-danger">
+                                                    {{ $errors->first('nosurat')}}
+                                                  </div>
+                                                @endif
+                                            </div>
+                                            <div class="col-lg-4 col-md-8 col-sm-4 col-xs-12">
+                                              <b>Nama File</b>
+                                                  <div class="nk-int-st">
+                                                    <input type="text" name="nama_file" placeholder="SuratPKL">
+                                                  </div>
+                                                @if($errors->has('nama_file'))
+                                                  <div class="text-danger">
+                                                    {{ $errors->first('nama_file')}}
+                                                  </div>
+                                                @endif
+                                            </div>
+                                            <div class="col-lg-4 col-md-8 col-sm-4 col-xs-12">
+                                              <input type="file" name="file" class="btn btn-success" value="Upload File">
+                                              <input type="submit" class="btn btn-success" value="Upload File">
+                                            </div>
+                                          </div>
+                                        </div>
+                                    </div>
+                              </div>
+                          </form>
+
+  @if (Route::has('login'))
+                                              <li class="nav-item">
+                                                  <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                              </li>
+                                            @endif	
